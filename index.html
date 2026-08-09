@@ -157,7 +157,7 @@
             padding: 16px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
         .key-box {
@@ -233,6 +233,7 @@
             gap: 8px;
             box-shadow: 0 10px 24px rgba(37, 99, 235, .28);
             transition: transform .18s ease, filter .18s ease;
+            margin-top: 4px;
         }
 
         .btn-copy:hover {
@@ -337,6 +338,11 @@
                     <span id="timeDisplay" class="info-value">--:--</span>
                 </div>
 
+                <div class="info-row" id="deviceRow" style="display: none;">
+                    <span class="info-label">Số thiết bị:</span>
+                    <span id="deviceDisplay" class="info-value">--</span>
+                </div>
+
                 <button class="btn-copy" id="copyBtn" type="button" onclick="copyKey()">
                     <svg viewBox="0 0 24 24">
                         <rect x="9" y="9" width="13" height="13" rx="2"></rect>
@@ -361,11 +367,14 @@
         const urlParams = new URLSearchParams(window.location.search);
         const keyParam = (urlParams.get('key') || '').trim();
         const timeParam = (urlParams.get('time') || '').trim();
+        const deviceParam = (urlParams.get('device') || '').trim();
 
         const keyDisplay = document.getElementById('keyDisplay');
         const copyBtn = document.getElementById('copyBtn');
         const timeRow = document.getElementById('timeRow');
         const timeDisplay = document.getElementById('timeDisplay');
+        const deviceRow = document.getElementById('deviceRow');
+        const deviceDisplay = document.getElementById('deviceDisplay');
         const statusText = document.getElementById('statusText');
         const toast = document.getElementById('toast');
 
@@ -392,6 +401,12 @@
                 timeDisplay.textContent = timeParam;
             }
             timeRow.style.display = 'flex';
+        }
+
+        // Hiển thị Số Thiết Bị (?device=1)
+        if (deviceParam) {
+            deviceDisplay.textContent = `${deviceParam} thiết bị`;
+            deviceRow.style.display = 'flex';
         }
 
         async function copyKey() {
